@@ -8,7 +8,7 @@
      
      cleanWs()
 
-     println("Started the Node-App Build Pipeline from Github 🦤🦉 .... ")
+     println("Started the Node-App Build Pipeline from Github 2 🦤🦉 .... ")
 
      stage("Checkout Git Repo"){
          sshagent(credentials: ['github_ssh_key']) {
