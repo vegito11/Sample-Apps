@@ -16,6 +16,17 @@ class Player:
 	def __str__(self):
 		return f"{self.name} ({self.club}) -- {self.matches} -- {self.id} "
 
+    # Add a to_dict method to serialize the Player object to a dictionary
+	def to_dict(self):
+		return {
+			"id": self.id,
+			"name": self.name,
+			"age": self.age,
+			"club": self.club,
+			"goals": self.goals,
+			"matches": self.matches
+		}		
+
 if __name__ == '__main__':
 	p = Player("Lionel Messi", 23, "PSG", 734, 819)
 	print(p)
