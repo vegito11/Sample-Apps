@@ -2,11 +2,13 @@ from flask import Flask, jsonify, abort
 import os
 from controllers.player_controller import player_controller
 from controllers.test_controller import test_controller
+from controllers.aws_controller import aws_controller
 
 app = Flask(__name__)
 
 app.register_blueprint(player_controller)
 app.register_blueprint(test_controller)
+app.register_blueprint(aws_controller)
 
 # Counter to keep track of the number of health check calls
 health_check_counter = 0
