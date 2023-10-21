@@ -23,7 +23,7 @@ def health_check():
     health_check_counter += 1
     
     if health_check_counter <= FAILURE_THRESHOLD:
-        return jsonify(status="Healthy")
+        return jsonify(status=f"Healthy - {health_check_counter} ")
     else:
         # Simulate a failing health check by returning an error status code (e.g., 500)
         abort(500)

@@ -17,6 +17,7 @@ def list_bucket_objects(bucket_name):
         for obj in objects:
             print(f"S3 Object: {obj['Key']}")
             result.append(obj['Key'])
+        return result            
     except NoCredentialsError:
         print("No AWS credentials found. Make sure to configure your AWS credentials.")
     except Exception as e:

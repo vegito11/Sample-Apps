@@ -4,6 +4,8 @@ ENV PYTHONPATH /app
 
 WORKDIR /app
 
+RUN apt update && apt install curl -y
+
 COPY requirements.txt .
 
 RUN pip install -r requirements.txt
