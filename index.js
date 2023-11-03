@@ -8,7 +8,10 @@ const version = "V1.0.1"
 
 app.get('/',(req,res) => {
 	resp = 'Hi welcome to Sample node App : ' + version
-	res.send(resp)
+	res.json({
+	  "Hi welcome to Sample node App": version
+	});
+
 })
 
 app.get('/add',(req,res) => {
@@ -17,7 +20,11 @@ app.get('/add',(req,res) => {
 	num1 = Number.parseInt(req.query.num1 || 0)
 	num2 = Number.parseInt(req.query.num2 || 0)
 	result = num1 + num2 + offset
-	res.send(` addition of ${num1} + ${num2} with offset of ${offset} : ${result}`)
+	res.json({
+	  message: `addition of ${num1} + ${num2} with offset of ${offset}`,
+	  result: result
+	});
+
 })
 
 app.get('/mul',(req,res) => {
@@ -25,7 +32,12 @@ app.get('/mul',(req,res) => {
 	num1 = Number.parseInt(req.query.num1 || 1)
 	num2 = Number.parseInt(req.query.num2 || 1)
 	result = num1 * num2
-	res.send(` Multiplication of ${num1} * ${num2} with offset of: ${result}`)
+
+	res.json({
+	  message: `Multiplication of ${num1} * ${num2}`,
+	  result: result
+	});
+
 })
 
 app.get('/whoami', (req, res) => {
