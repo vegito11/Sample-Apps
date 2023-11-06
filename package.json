@@ -1,8 +1,10 @@
 {
-	"dependencies" : {
-		"express" : "*"
+	"dependencies": {
+		"aws-xray-sdk": "^3.5.3",
+		"express": "*",
+		"morgan": "^1.10.0"
 	},
-	"scripts" : {
-		"start" : "node index.js"
+	"scripts": {
+		"start": "node index.js"
 	}
 }

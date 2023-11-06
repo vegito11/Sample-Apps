@@ -1,10 +1,28 @@
 const express = require('express')
 const os = require('os');
-
+const AWSXRay = require('aws-xray-sdk');
+const morgan = require('morgan');
 
 const app = express()
 
-const version = "V1.0.1"
+app.use(morgan('combined'));
+
+var logger = {
+  error: (message, meta) => { /* logging code */ },
+  warn: (message, meta) => { /* logging code */ },
+  info: (message, meta) => { /* logging code */ },
+  debug: (message, meta) => { /* logging code */ }
+}
+
+AWSXRay.setLogger(logger);
+AWSXRay.config([AWSXRay.plugins.ECSPlugin]);
+
+
+// Initialize the X-Ray SDK
+AWSXRay.captureHTTPsGlobal(require('http'));
+app.use(AWSXRay.express.openSegment('MyApp'));
+
+const version = "V1.0.2"
 
 app.get('/',(req,res) => {
 	resp = 'Hi welcome to Sample node App : ' + version
@@ -54,6 +72,9 @@ app.get('/whoami', (req, res) => {
 
   res.json(userInfo);
 });
+
+app.use(AWSXRay.express.closeSegment('MyApp'));
+
 app.listen(8080,()=>{
 	console.log("Hi I am Listening on port 8080");
 })
