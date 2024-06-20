@@ -2,7 +2,7 @@ import random
 import requests
 import traceback
 
-from loggers.logger import logger
+from loggers.logger import app_logger
 # Sample data for generating logs
 users = ['Alice', 'Bob', 'Charlie', 'Dave', 'Eve']
 actions = ['accessed', 'created', 'deleted', 'updated', 'viewed']
@@ -74,5 +74,5 @@ def random_exception_generator():
             num = int('invalid_int')
         
     except Exception as e:
-        logger.error(f"{exception_type} occurred: {e}")
-        logger.error(traceback.format_exc())
+        app_logger.error(f"{exception_type} occurred: {e}")
+        app_logger.error(traceback.format_exc())

@@ -3,7 +3,7 @@ import random
 import string
 import time
 
-from loggers.logger import logger
+from loggers.logger import app_logger
 from utils.utility import (log_templates, users, 
 actions, items, random_exception_generator)
 
@@ -22,28 +22,28 @@ def random_log():
     message = generate_random_log_message(log_level)
     
     if log_level == 'debug':
-        logger.debug(message)
+        app_logger.debug(message)
     elif log_level == 'info':
-        logger.info(message)
+        app_logger.info(message)
     elif log_level == 'warning':
-        logger.warning(message)
+        app_logger.warning(message)
     elif log_level == 'error':
-        logger.error(message)
+        app_logger.error(message)
     elif log_level == 'critical':
-        logger.critical(message)
+        app_logger.critical(message)
 
     return f'Generated a {log_level} log.'
 
 @loggen_controller.route('/generate-debug')
 def generate_debug():
     message = generate_random_log_message('debug')
-    logger.debug(message)
+    app_logger.debug(message)
     return 'Generated a debug log.'
 
 @loggen_controller.route('/generate-error')
 def generate_error():
     message = generate_random_log_message('error')
-    logger.error(message)
+    app_logger.error(message)
     return 'Generated an error log.'
 
 @loggen_controller.route('/generate-exception')
@@ -64,14 +64,14 @@ def generate_mixed():
         time.sleep(0.7)
         
         if log_level == 'debug':
-            logger.debug(message)
+            app_logger.debug(message)
         elif log_level == 'info':
-            logger.info(message)
+            app_logger.info(message)
         elif log_level == 'warning':
-            logger.warning(message)
+            app_logger.warning(message)
         elif log_level == 'error':
-            logger.error(message)
+            app_logger.error(message)
         elif log_level == 'critical':
-            logger.critical(message)
+            app_logger.critical(message)
 
     return 'Generated mixed logs.'

@@ -1,6 +1,6 @@
 from flask import Flask, jsonify, abort
 import os
-from loggers.logger import logger
+from loggers.logger import app_logger
 from controllers.log_generator import loggen_controller
 
 app = Flask(__name__)
