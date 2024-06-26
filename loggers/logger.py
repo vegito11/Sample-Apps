@@ -5,6 +5,7 @@ import sys
 from logging.handlers import RotatingFileHandler
 
 # Read environment variables to configure logging
+app_name = os.getenv('APP_NAME', 'app1')  # Enable or disable console logging
 cli_log = os.getenv('CONSOLE_LOG', 'enabled')  # Enable or disable console logging
 file_log = os.getenv('FILE_LOG', 'enabled')    # Enable or disable file logging
 log_type = os.getenv('LOG_TYPE', 'json')       # Set log format type (json or text)
@@ -29,11 +30,12 @@ class JsonFormatter(logging.Formatter):
         return json.dumps(log_record)
 
 # Define the log format for text logs
-formatter = f'[%(levelname)s] [%(asctime)s] %(lineno)d - %(message)s [{app_name}]'
+formatter = f'[{app_name}] [%(levelname)s] [%(asctime)s] %(lineno)d - %(message)s'
 log_format = logging.Formatter(formatter)
 
 # Configure the application logger
 app_logger = logging.getLogger('rand_logger')
+app_logger.setLevel(logging.DEBUG) 
 
 ## Update the default flask logger setting
 werkzeug_logger = logging.getLogger('werkzeug')
