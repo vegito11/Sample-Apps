@@ -1,0 +1,7 @@
+Dockerfile
+.github/*
+Readme.md
+htmlcov
+**/__pycache__/
+**/**/*.cpython-38.pyc
+.coverage
