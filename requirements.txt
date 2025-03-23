@@ -1,0 +1,7 @@
+Flask==3.0.3
+azure-identity==1.20.0
+azure-storage-blob==12.24.1
+azure_mgmt_compute==34.0.0
+azure_keyvault==4.2.0
+azure-mgmt-resource==23.3.0
+python-dotenv
