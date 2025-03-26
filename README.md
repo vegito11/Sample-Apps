@@ -14,7 +14,7 @@ export PYTHONPATH=$(pwd)
 python -m app.tmp
 python app.py
 
-curl http://<load-balancer-ip>:5000/volume-usage
+curl -X GET http://localhost:5000/list-vms
 ```
 
 
@@ -24,7 +24,7 @@ curl http://<load-balancer-ip>:5000/volume-usage
    
     ```bash
     RG_NAME="management"
-    ACR_REPO_NAME="staginguswest2app"
+    ACR_REPO_NAME="vegitoapp"
     az acr create --resource-group $RG_NAME --name $ACR_REPO_NAME --sku Basic
     ```
 
@@ -48,27 +48,51 @@ curl http://<load-balancer-ip>:5000/volume-usage
 	```bash
 	docker build -t azure-sample-app .
 
-	ACR_REPO_NAME="$ACR_REPO_NAME.azurecr.io/az-sample-app:v2"
+	ACR_REPO_URL="$ACR_REPO_NAME.azurecr.io/az-sample-app:v2"
 
-	docker tag azure-sample-app  $ACR_REPO_NAME
+	docker tag azure-sample-app  $ACR_REPO_URL
 	```
 
 ---------------------------------------------------
 
-**Pod Identity Setup (AKS):**
-1. **Install Azure Pod Identity:**
-```sh
-az aks enable-addons --addons azure-keyvault-secrets-provider --resource-group <your-rg> --name <your-aks-cluster>
-```
+## API Endpoints & Usage
 
-2. **Assign Managed Identity:**
+### 1️⃣  List Azure Virtual Machines
 
-```sh
-az identity create --name aks-pod-identity --resource-group <your-rg>
-az aks pod-identity add --resource-group <your-rg> --cluster-name <your-aks-cluster> --namespace default --name pod-identity --identity-resource-id <identity-id>
-```
+  ```sh
+  curl -X GET http://localhost:5000/list-vms
+  ```
 
-3. **Grant Storage Access:**
-```sh
-az role assignment create --role "Storage Blob Data Reader" --assignee <client-id> --scope /subscriptions/<sub-id>/resourceGroups/<your-rg>/providers/Microsoft.Storage/storageAccounts/<storage-account>
-```
+### 2️⃣  Get Secret from Azure Key Vault
+
+  ```sh
+  curl -X GET http://localhost:5000/get-secret/db-url
+  ```
+
+### 3️⃣  Create a Secret in Azure Key Vault
+
+  ```sh
+  curl -X POST http://localhost:5000/create-secret \
+       -H "Content-Type: application/json" \
+       -d '{"name": "dbpass", "value": "sdfer3243"}'
+  ```
+
+### 4️⃣  Upload File to Azure Blob Storage
+
+  ```sh
+  curl -X POST http://localhost:5000/upload-file \
+       -F "file=@/path/to/your/file.txt"
+  ```
+
+### 5️⃣ List Files in Azure Blob Storage
+
+  ```sh
+  curl -X GET http://localhost:5000/list-files
+  ```
+
+
+
+---------------------------------------------------
+
+- [Add workload identity in AKS cluster](https://learn.microsoft.com/en-us/azure/aks/workload-identity-deploy-cluster)
+
